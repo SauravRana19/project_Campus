@@ -122,7 +122,12 @@ export default {
       }
     }
     function login() {
-      router.push({ name: "dashboard" });
+      let EmailR = localStorage.getItem("Registeruser");
+      const tempData =JSON.parse(EmailR)
+      const [LocalData]= tempData
+      const {email, password}=LocalData
+      console.log("ssssssss",email,password) 
+      // router.push({ name: "dashboard" });
     }
     function Signup() {
       router.push({ name: "register" });
@@ -137,12 +142,12 @@ export default {
       error,
       validationE,
       validationP,
+      
     };
   },
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200;800&family=Itim&display=swap");
 
 .label {
   font-size: 3vw;
@@ -158,7 +163,7 @@ span{
 }
 .backgd {
   background-color: white;
-  font-family: "Itim", sans-serif;
+  font-family: "Exo 2", sans-serif;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }

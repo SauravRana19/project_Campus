@@ -84,14 +84,13 @@
             </ul>
             <div class="row mt-4 text-center">
               <Button
-                @click="register()" 
+                @click="register()"
                 id="btn1"
                 type="button"
                 class="btn btn-warning btn-lg bt1"
-                :disabled="Confirmpassword != Password"
-                
-              >Sign UP
-              </Button>   
+                :disabled="Username && Email && Confirmpassword != Password  "
+                >Sign UP
+              </Button>
               <a class="bt1" href="#"
                 ><p @click.prevent="login()">Already Account login</p></a
               >
@@ -115,7 +114,6 @@ export default {
     const Confirmpassword = ref("");
     const error = ref("");
 
-
     const regUsername = ref(
       /^(?=.{5,20}$)(?![_.-])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$/
     );
@@ -137,7 +135,6 @@ export default {
       ) {
         alert("Empty  Field");
       } else {
-        
         data.value.push(
           Username.value,
           Email.value,
@@ -145,7 +142,7 @@ export default {
           Confirmpassword.value
         );
         console.log(data);
-        localStorage.setItem("Composition Api", JSON.stringify(data.value));
+        localStorage.setItem("Registeruser", JSON.stringify(data.value));
         router.push({ name: "dashboard" });
       }
     }
@@ -212,10 +209,7 @@ export default {
       } else {
         error.value.push({
           ConfirmpasswordValid: "Password Matched",
-    
-        })
-        
-
+        });
       }
     }
     function login() {
@@ -242,8 +236,6 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200;800&family=Itim&display=swap");
-
 .label {
   font-size: 3vw;
 }
@@ -258,7 +250,7 @@ span {
 }
 .backgd {
   background-color: white;
-  font-family: "Itim", sans-serif;
+  font-family: "Exo 2", sans-serif;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
