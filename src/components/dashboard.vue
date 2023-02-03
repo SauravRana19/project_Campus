@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="container">
     <div class="tables rounded">
+      <headers />
       <table class="table table-hover">
         <thead class="thead-dark">
           <th>Id</th>
@@ -10,54 +11,79 @@
           <tr v-for="item in post" v-bind:key="item.id">
             <td>{{ item.id }}</td>
             <td @click="DiscUser(item.id)">
-              <a href="#">{{ item.FullName }} </a>
+              <a href="#">{{ item.fullname }} </a>
             </td>
             <td>{{ item.email }}</td>
-            <td>{{ item.number }}</td>
+            <td>{{ item.password }}</td>
             <td>
               <button
                 @click="editUser(item.id)"
                 type="button"
-                class="btn1"
+                class="btn btn-warning btn-sm"
                 data-bs-toggle="modal"
                 data-bs-target="#useredit"
               >
                 <i class="fa fa-pencil" aria-hidden="true"></i>
-                Edit
+                <span class="btn1">Edit</span>
               </button>
             </td>
             <td>
-              <button @click="Dell(item.id)" type="button" class="btn2">
+              <button
+                @click="Dell(item.id)"
+                type="button"
+                class="btn btn-danger btn-sm"
+              >
                 <i class="fa fa-close"></i>
-                Delete
+                <span class="btn2">Delete</span>
               </button>
             </td>
           </tr>
         </thead>
       </table>
+      <userform />
     </div>
   </div>
 </template>
 <script>
+import userform from "@/components/userform.vue";
 import axios from "axios";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
+import headers from "@/components/header.vue";
 export default {
+  components: { headers, userform },
   name: "dash-board",
   setup() {
     let post = ref("");
+    let b = reactive([]);
 
     function getdata() {
       axios
-        .get(`https://api-generator.retool.com/jJl7vj/data`)
+        .get(`https://api-generator.retool.com/2DhLht/data`)
         .then((response) => {
           post.value = response.data;
-          console.log(post.value);
-          //    b = response.data;
-          //     b.map((data) => {
-          //     console.log("data", data.number);
-          //     data.number = window.atob(data.number);
+          // console.log(post.value);
+          b = response.data;
+          // console.log("Response b ", b);
+          b.map((b) => {
+            // console.log("data", b.password);
+            b.password = window.atob(b.password);
+            // console.log("data password",b.password)
+          });
         });
-      // });
+    }
+    function Dell(id) {
+      fetch("https://api-generator.retool.com/2DhLht/data/" + id, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        if (response.ok) {
+          alert("Succesful");
+          getdata();
+          // swal.fire({ html: "Deleted! success" });
+        }
+      });
     }
 
     onMounted(function () {
@@ -66,44 +92,25 @@ export default {
     return {
       getdata,
       post,
+      Dell,
     };
   },
 };
 </script>
-<style>
+<style scoped>
 .btn1 {
-  background-color: #fff000;
-  border-radius: 12px;
-  color: #000;
-  cursor: pointer;
-  font-weight: bold;
-  padding: 10px 15px;
-  text-align: center;
-  transition: 200ms;
-  width: 100%;
-  box-sizing: border-box;
-  border: 0;
-  font-size: 16px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+  font-size: 1.2vw;
+  color: black;
+  padding-left: 10px;
 }
 .btn2 {
-  background-color: rgba(255, 0, 0, 0.626);
-  border-radius: 12px;
-  color: #fff;
-  cursor: pointer;
-  font-weight: bold;
-  padding: 10px 15px;
-  text-align: center;
-  transition: 200ms;
-  width: 100%;
-  box-sizing: border-box;
-  border: 0;
-  font-size: 16px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+  font-size: 1.2vw;
+  color: white;
+  padding-left: 10px;
+}
+th {
+  padding-left: 10px;
+  font-size: 1.5vw;
 }
 li {
   list-style: none;
@@ -126,8 +133,6 @@ tr {
   margin: 2% 0% 0% 1%;
   border-radius: 0 0 10px 10px;
   background-color: aliceblue;
-  width: auto;
-  height: auto;
 }
 span {
   font-size: 2vw;

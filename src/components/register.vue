@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container m-auto mt-3 rounded">
-      <div class="row backgd rounded">
+      <div class="row w-60 backgd rounded">
         <div class="col-md-6 rounded">
           <h1 class="display-1 text-center h1">Register page</h1>
           <img
@@ -23,8 +23,8 @@
             <p v-if="error.length"></p>
             <ul>
               <li v-for="e in error" v-bind:key="e.id">
-                {{ e.UsernameNValid }}
-                {{ e.regUsername }}
+                <span class="red">{{ e.UsernameNValid }}</span>
+                <span class="red">{{ e.regUsername }}</span>
                 <span>{{ e.UsernameValid }}</span>
               </li>
             </ul>
@@ -42,43 +42,55 @@
             <p v-if="error.length"></p>
             <ul>
               <li v-for="e in error" v-bind:key="e.id">
-                {{ e.emailReqError }}
-                {{ e.emailNValid }}
+                <span class="red">{{ e.emailReqError }}</span>
+                <span class="red">{{ e.emailNValid }}</span>
                 <span>{{ e.emailValid }}</span>
               </li>
             </ul>
 
             <label class="label">Password</label>
             <input
-              type="password"
+              :type="passwordField"
               class="form-control bt1"
-              placeholder="Enter Password"
+              placeholder=" Enter Password"
               autocomplete="off"
               v-model="Password"
               @keyup.prevent="validationP()"
             />
+            <font-awesome-icon
+              @click="showpwd()"
+              class="fnt"
+              :icon="['fas', 'eye']"
+            />
             <p v-if="error.length"></p>
+
             <ul>
               <li v-for="e in error" v-bind:key="e.id">
-                {{ e.PasswordNValid }}
-                {{ e.regPassword }}
+                <span class="red">{{ e.PasswordNValid }}</span>
+                <span class="red">{{ e.regPassword }}</span>
                 <span>{{ e.PasswordValid }}</span>
               </li>
             </ul>
+
             <label class="label">Confirm-Password</label>
             <input
-              type="password"
+              :type="CpasswordField"
               class="form-control bt1"
               placeholder="Enter Confirm-Password"
               autocomplete="off"
               v-model="Confirmpassword"
               @keyup.prevent="validationCP"
             />
+            <font-awesome-icon
+              @click="showCpwd()"
+              class="fnt1"
+              :icon="['fas', 'eye']"
+            />
             <p v-if="error.length"></p>
             <ul>
               <li v-for="e in error" v-bind:key="e.id">
-                {{ e.ConfirmpasswordNValid }}
-                {{ e.regConfirmpassword }}
+                <span class="red">{{ e.ConfirmpasswordNValid }}</span>
+                <span class="red">{{ e.regConfirmpassword }}</span>
                 <span>{{ e.ConfirmpasswordValid }}</span>
               </li>
             </ul>
@@ -88,7 +100,7 @@
                 id="btn1"
                 type="button"
                 class="btn btn-warning btn-lg bt1"
-                :disabled="Username && Email && Confirmpassword != Password  "
+                :disabled="Username && Email && Confirmpassword != Password"
                 >Sign UP
               </Button>
               <a class="bt1" href="#"
@@ -104,6 +116,7 @@
 <script>
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+
 export default {
   name: "regi-ster",
   setup() {
@@ -113,6 +126,8 @@ export default {
     const Password = ref("");
     const Confirmpassword = ref("");
     const error = ref("");
+    const passwordField = ref("password");
+    const CpasswordField = ref("password");
 
     const regUsername = ref(
       /^(?=.{5,20}$)(?![_.-])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$/
@@ -126,8 +141,6 @@ export default {
 
     let router = useRouter();
 
-    // const button1 = document.querySelector("#btn1");
-
     function register() {
       if (
         (Username.value == "") & (Email.value == "") & (Password.value == "") &&
@@ -138,14 +151,24 @@ export default {
         data.value.push(
           Username.value,
           Email.value,
-          Password.value,
-          Confirmpassword.value
+          Password.value
+         
         );
         console.log(data);
         localStorage.setItem("Registeruser", JSON.stringify(data.value));
-        router.push({ name: "dashboard" });
+        router.push({ name: "login" });
       }
     }
+
+    function showpwd() {
+      passwordField.value =
+        passwordField.value === "password" ? "text" : "password";
+    }
+    function showCpwd() {
+      CpasswordField.value =
+        CpasswordField.value === "password" ? "text" : "password";
+    }
+
     function validationU() {
       error.value = [];
       if (Username.value === "") {
@@ -222,6 +245,8 @@ export default {
       Password,
       Confirmpassword,
       register,
+      passwordField,
+      CpasswordField,
 
       error,
       data,
@@ -231,22 +256,30 @@ export default {
       validationE,
       validationP,
       validationCP,
+      showpwd,
+      showCpwd,
     };
   },
 };
 </script>
 <style scoped>
 .label {
-  font-size: 3vw;
+  font-size: 2.3vw;
 }
 span {
   color: green;
+  font-family: "Exo 2", sans-serif;
+}
+.red {
+  color: red;
+  font-family: "Exo 2", sans-serif;
 }
 .h1 {
-  font-size: 4vw;
+  font-size: 3vw;
 }
 .bt1 {
   font-size: 1.5vw;
+  content: "\f073";
 }
 .backgd {
   background-color: white;
@@ -256,5 +289,17 @@ span {
 }
 .red {
   color: red;
+}
+.fnt {
+  position: fixed;
+  right: 10%;
+  font-size: 1.2vw;
+  bottom: 51%;
+}
+.fnt1 {
+  position: fixed;
+  right: 10%;
+  font-size: 1.2vw;
+  bottom: 33%;
 }
 </style>

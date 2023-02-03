@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container  mt-5 rounded">
+    <div class="container mt-5 rounded">
       <div class="row backgd rounded">
         <div class="col-md-6 rounded">
           <h1 class="display-1 text-center h1">Login page</h1>
@@ -22,34 +22,36 @@
               />
               <!-- Error Message -->
 
-              <p v-if="error.length">
+              <p v-if="error.length"></p>
               <ul>
                 <li v-for="e in error" v-bind:key="e.id">
-                  {{ e.emailReqError }}
-                  {{ e.emailNValid }}
-                  <span>{{ e.emailValid }}</span>
+                  <span class="red">{{ e.emailReqError }}</span>
+                  <span>{{ e.emailNValid }}</span>
                 </li>
-              </ul></p>
+              </ul>
             </div>
             <div class="form-group">
               <label class="label mt-2">Password</label>
               <input
-                type="text"
+                :type="passwordField"
                 class="form-control bt1"
                 placeholder="Enter Password"
                 autocomplete="off"
                 v-model="Password"
-                required="password"
                 @keyup="validationP"
               />
-              <p v-if="error.length">
+              <font-awesome-icon
+                @click="showpwd()"
+                class="fnt"
+                :icon="['fas', 'eye']"
+              />
+              <p v-if="error.length"></p>
               <ul>
                 <li v-for="e in error" v-bind:key="e.id">
-                  {{ e.PasswordNValid }}
-                  {{ e.regNPassword }}
-                  <span>{{ e.PasswordValid}}</span>
+                  <span class="red"> {{ e.PasswordNValid }}</span>
+                  <span>{{ e.regNPassword }}</span>
                 </li>
-              </ul></p>
+              </ul>
             </div>
 
             <div class="row mt-2 text-center">
@@ -57,11 +59,13 @@
                 @click="login()"
                 type="button"
                 class="btn btn-warning btn-lg bt1 mt-4"
-                :disabled=" Password == ''"
+                :disabled="Email && Password == ''"
               >
                 Login
               </button>
-              <a class="bt1 mt-4" href="#"><p @click="Signup()">Sign Up</p></a>
+              <a class="bt1 mt-4" href="#"
+                ><p @click="Signup()">Create a new account</p></a
+              >
             </div>
           </form>
         </div>
@@ -71,14 +75,15 @@
 </template>
 <script>
 import { useRouter } from "vue-router";
-import { ref} from "vue";
+import { ref } from "vue";
 
 export default {
   name: "log-in",
   setup() {
     const Email = ref("");
     const Password = ref("");
-    const error =ref("");
+    const error = ref("");
+    const passwordField = ref("password");
     const regEmail = ref(
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/
     );
@@ -89,7 +94,7 @@ export default {
     let router = useRouter();
 
     function validationE() {
-        error.value = [];
+      error.value = [];
       if (Email.value === "") {
         error.value.push({
           emailReqError: "Email is required",
@@ -100,37 +105,44 @@ export default {
         });
       } else {
         error.value.push({
-         emailValid: "Username is valid",
+          emailValid: "Username is valid",
         });
       }
     }
     function validationP() {
-         error.value = [];
+      error.value = [];
       if (Password.value === "") {
         error.value.push({
           PasswordNValid: "Password is required",
         });
       } else if (!regPassword.value.test(Password.value)) {
         error.value.push({
-            PasswordNValid:
-            "Password Should containe one Numeric, one Special Character, Minimum 6 Chracter  ",
+          PasswordNValid: "Password Not Valid  ",
         });
       } else {
         error.value.push({
-            PasswordValid: "Password is valid",
+          regNPassword: "Password is valid",
         });
       }
     }
     function login() {
       let EmailR = localStorage.getItem("Registeruser");
-      const tempData =JSON.parse(EmailR)
-      const [LocalData]= tempData
-      const {email, password}=LocalData
-      console.log("ssssssss",email,password) 
-      // router.push({ name: "dashboard" });
+      const tempData = JSON.parse(EmailR);
+      const LocalData = tempData;
+      console.log(LocalData);
+      if (Email.value == LocalData[1] && Password.value == LocalData[2]) {
+        console.log(Email.value && Password.value == LocalData[1]);
+        router.push({ name: "dashboard" });
+      } else {
+        console.log(Email.value && Password.value == LocalData[1]);
+      }
     }
     function Signup() {
       router.push({ name: "register" });
+    }
+    function showpwd() {
+      passwordField.value =
+        passwordField.value === "password" ? "text" : "password";
     }
     return {
       Email,
@@ -142,21 +154,21 @@ export default {
       error,
       validationE,
       validationP,
-      
+      showpwd,
+      passwordField,
     };
   },
 };
 </script>
 <style scoped>
-
 .label {
-  font-size: 3vw;
+  font-size: 2.4vw;
 }
-span{
-    color: green;
+span {
+  color: green;
 }
 .h1 {
-  font-size: 4vw;
+  font-size: 3vw;
 }
 .bt1 {
   font-size: 1.5vw;
@@ -166,6 +178,15 @@ span{
   font-family: "Exo 2", sans-serif;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.red {
+  color: red;
+}
+.fnt {
+  position: fixed;
+  right: 10%;
+  font-size: 1.2vw;
+  bottom: 51%;
 }
 .red {
   color: red;
