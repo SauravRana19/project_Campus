@@ -6,6 +6,7 @@ import headers from  "@/components/header.vue";
 import userform from '@/components/userform.vue'
 
 
+
 const routes = [
   {
     path: "/",
@@ -46,7 +47,7 @@ const routes = [
     meta: {
       auth: true,
     },
-  }
+  },
 ];
 
 const router = createRouter({

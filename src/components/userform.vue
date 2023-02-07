@@ -104,11 +104,12 @@
 import { ref } from "vue";
 export default {
   name: "userfo-rm",
-  setup() {
+  setup(props, context) {
     const error = ref("");
     const Username = ref("");
     const Email = ref("");
     const Password = ref("");
+    console.log(context);
 
     const regUsername = ref(
       /^(?=.{5,20}$)(?![_.-])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$/
@@ -189,8 +190,8 @@ export default {
             return response.json();
           })
           .then((data) => {
+            context.emit("show");
             console.log(data);
-            
           });
       }
     }
