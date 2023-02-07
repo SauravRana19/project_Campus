@@ -6,6 +6,8 @@ import store from "./store";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 /* import the fontawesome core */
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -21,6 +23,6 @@ library.add(fas);
 
 createApp(App)
   .use(store)
-  .use(router, axios)
+  .use(router, axios,VueSweetalert2)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");

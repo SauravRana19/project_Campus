@@ -41,51 +41,68 @@
           </tr>
         </thead>
       </table>
-      <div class="modal" id="useredit" @close="getdata()">
+      <div
+        class="modal fade"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        id="useredit"
+        @close="getdata()"
+      >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 style="font-size: 2vw">Edit UserData</h1>
-              <form>
-                <div class="form-group">
-                  <label for=""> FullName:</label
-                  ><input
-                    class="form-control"
-                    placeholder="Enter Full Name"
-                    type="text"
-                    @keyup="register"
-                    v-model="EditData.fullname"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for=""> Email:</label
-                  ><input
-                    class="form-control"
-                    placeholder="Enter Email"
-                    type="email"
-                    v-model="EditData.email"
-                    @keyup="register"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for=""> Password:</label
-                  ><input
-                    class="form-control"
-                    placeholder="Enter Password"
-                    type="password"
-                    v-model="EditData.password"
-                    @keyup="register"
-                  />
-                </div>
-              </form>
+              <h1 class="modal-title">Edit UserData</h1>
             </div>
-            <button
-              type="button"
-              class="btn btn-warning"
-              @click="Update(EditData.id)"
-            >
-              <i class="fa fa-pencil" aria-hidden="true"></i>Update
-            </button>
+            <form class="form-auto">
+              <div class="form-group">
+                <label for=""> FullName:</label
+                ><input
+                  class="form-control"
+                  placeholder="Enter Full Name"
+                  type="text"
+                  @keyup="register"
+                  v-model="EditData.fullname"
+                />
+              </div>
+              <div class="form-group">
+                <label for="Email"> Email:</label
+                ><input
+                  class="form-control"
+                  placeholder="Enter Email"
+                  type="email"
+                  v-model="EditData.email"
+                  @keyup="register"
+                />
+              </div>
+              <div class="form-group">
+                <label for="Password"> Password:</label
+                ><input
+                  class="form-control"
+                  placeholder="Enter Password"
+                  type="password"
+                  v-model="EditData.password"
+                  @keyup="register"
+                />
+              </div>
+            </form>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-warning"
+                @click="Update(EditData.id)"
+                data-bs-dismiss="modal"
+              >
+                <i class="fa fa-pencil" aria-hidden="true"></i>Update
+              </button>
+              <button
+                class="btn btn-danger ml-2"
+                type="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -97,7 +114,7 @@
 import userform from "@/components/userform.vue";
 import axios from "axios";
 import { useStore } from "vuex";
-
+import swal from "sweetalert2";
 import { onMounted, computed, ref } from "vue";
 import headers from "@/components/header.vue";
 
@@ -109,7 +126,6 @@ export default {
 
     let EditData = ref({});
     let b = ref("");
-
 
     const store = useStore();
 
@@ -127,9 +143,8 @@ export default {
         },
       }).then((response) => {
         if (response.ok) {
-          alert("Succesful");
+          swal.fire({ html: "Deleted! success" });
           getdata();
-          // swal.fire({ html: "Deleted! success" });
         }
       });
     }
@@ -147,10 +162,8 @@ export default {
         EditData.value.email == "" ||
         EditData.value.password == ""
       ) {
-        // swal.fire({ title: "Empty Fields" });
+        swal.fire({ title: "Empty Fields" });
       } else {
-        
-
         var a = EditData.value.password;
         b.value = window.btoa(a);
         fetch("https://api-generator.retool.com/2DhLht/data/" + recordId, {
@@ -168,7 +181,7 @@ export default {
             if (res.ok) {
               console.log("PUT Request Successful");
               this.getdata();
-              // swal.fire({ html: "Updated!" });
+              swal.fire({ html: "Updated!" });
             } else {
               console.log("PUT Request Failed");
             }
@@ -195,7 +208,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style >
 .btn1 {
   font-size: 1.2vw;
   color: black;
@@ -219,9 +232,7 @@ ul {
   font-size: large;
   margin-left: -30px;
 }
-td a {
-  text-decoration: none;
-}
+
 tr {
   font-size: 1.4vw;
 }
@@ -239,5 +250,8 @@ span {
 
 .align-right {
   text-align: right;
+}
+label {
+  font-size: 1.5vw;
 }
 </style>

@@ -10,7 +10,7 @@
           />
         </div>
         <div class="col-md-6">
-          <form class="rounded">
+          <form class="form rounded">
             <label class="label">UserName</label>
             <input
               type="text"
@@ -47,53 +47,59 @@
                 <span>{{ e.emailValid }}</span>
               </li>
             </ul>
+            <div class="form-outline">
+              <label class="label">Password</label>
+              <div>
+                <input
+                  :type="passwordField"
+                  class="form-control form-icon-trailing bt1"
+                  placeholder=" Enter Password"
+                  autocomplete="off"
+                  v-model="Password"
+                  @keyup.prevent="validationP()"
+                />
 
-            <label class="label">Password</label>
-            <input
-              :type="passwordField"
-              class="form-control bt1"
-              placeholder=" Enter Password"
-              autocomplete="off"
-              v-model="Password"
-              @keyup.prevent="validationP()"
-            />
-            <font-awesome-icon
-              @click="showpwd()"
-              class="fnt"
-              :icon="['fas', 'eye']"
-            />
-            <p v-if="error.length"></p>
+                <font-awesome-icon
+                  @click="showpwd()"
+                  class="fnt"
+                  :icon="['fas', 'eye']"
+                />
 
-            <ul>
-              <li v-for="e in error" v-bind:key="e.id">
-                <span class="red">{{ e.PasswordNValid }}</span>
-                <span class="red">{{ e.regPassword }}</span>
-                <span>{{ e.PasswordValid }}</span>
-              </li>
-            </ul>
+                <p v-if="error.length"></p>
 
-            <label class="label">Confirm-Password</label>
-            <input
-              :type="CpasswordField"
-              class="form-control bt1"
-              placeholder="Enter Confirm-Password"
-              autocomplete="off"
-              v-model="Confirmpassword"
-              @keyup.prevent="validationCP"
-            />
-            <font-awesome-icon
-              @click="showCpwd()"
-              class="fnt1"
-              :icon="['fas', 'eye']"
-            />
-            <p v-if="error.length"></p>
-            <ul>
-              <li v-for="e in error" v-bind:key="e.id">
-                <span class="red">{{ e.ConfirmpasswordNValid }}</span>
-                <span class="red">{{ e.regConfirmpassword }}</span>
-                <span>{{ e.ConfirmpasswordValid }}</span>
-              </li>
-            </ul>
+                <ul>
+                  <li v-for="e in error" v-bind:key="e.id">
+                    <span class="red">{{ e.PasswordNValid }}</span>
+                    <span class="red">{{ e.regPassword }}</span>
+                    <span>{{ e.PasswordValid }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="form">
+              <label class="label">Confirm-Password</label>
+              <input
+                :type="CpasswordField"
+                class="form-control bt1"
+                placeholder="Enter Confirm-Password"
+                autocomplete="off"
+                v-model="Confirmpassword"
+                @keyup.prevent="validationCP"
+              />
+              <font-awesome-icon
+                @click="showCpwd()"
+                class="fnt1"
+                :icon="['fas', 'eye']"
+              />
+              <p v-if="error.length"></p>
+              <ul>
+                <li v-for="e in error" v-bind:key="e.id">
+                  <span class="red">{{ e.ConfirmpasswordNValid }}</span>
+                  <span class="red">{{ e.regConfirmpassword }}</span>
+                  <span>{{ e.ConfirmpasswordValid }}</span>
+                </li>
+              </ul>
+            </div>
             <div class="row mt-4 text-center">
               <Button
                 @click="register()"
@@ -148,12 +154,7 @@ export default {
       ) {
         alert("Empty  Field");
       } else {
-        data.value.push(
-          Username.value,
-          Email.value,
-          Password.value
-         
-        );
+        data.value.push(Username.value, Email.value, Password.value);
         console.log(data);
         localStorage.setItem("Registeruser", JSON.stringify(data.value));
         router.push({ name: "login" });
@@ -263,6 +264,9 @@ export default {
 };
 </script>
 <style scoped>
+.form {
+  position: relative;
+}
 .label {
   font-size: 2.3vw;
 }
@@ -279,8 +283,8 @@ span {
 }
 .bt1 {
   font-size: 1.5vw;
-  content: "\f073";
 }
+
 .backgd {
   background-color: white;
   font-family: "Exo 2", sans-serif;
@@ -291,15 +295,19 @@ span {
   color: red;
 }
 .fnt {
-  position: fixed;
-  right: 10%;
-  font-size: 1.2vw;
-  bottom: 51%;
+  position: absolute;
+  display: flex;
+  right: 3%;
+  font-size: 1vw;
+  align-items: center;
+  bottom: 48.5%;
 }
 .fnt1 {
-  position: fixed;
-  right: 10%;
-  font-size: 1.2vw;
-  bottom: 33%;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  right: 3%;
+  font-size: 1vw;
+  bottom: 25.5%;
 }
 </style>

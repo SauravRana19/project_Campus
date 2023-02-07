@@ -10,7 +10,7 @@
           />
         </div>
         <div class="col-md-6 mt-5">
-          <form class="rounded">
+          <form class="rounded form">
             <div class="form-group">
               <label class="label mt-4">Email</label>
               <input
@@ -161,6 +161,9 @@ export default {
 };
 </script>
 <style scoped>
+.form{
+  position: relative;
+}
 .label {
   font-size: 2.4vw;
 }
@@ -183,10 +186,10 @@ span {
   color: red;
 }
 .fnt {
-  position: fixed;
-  right: 10%;
+  position: absolute;
+  right: 3%;
   font-size: 1.2vw;
-  bottom: 51%;
+  bottom: 50%;
 }
 .red {
   color: red;

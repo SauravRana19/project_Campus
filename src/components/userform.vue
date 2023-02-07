@@ -8,7 +8,7 @@
     >
       <i class="fa fa-address-book" aria-hidden="true"></i>Add New User
     </button>
-    <div class="modal" id="userforms" @close="getdata()">
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="userforms" @close="getdata()">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -101,6 +101,7 @@
   </div>
 </template>
 <script>
+import swal  from "sweetalert2";
 import { ref } from "vue";
 export default {
   name: "userfo-rm",
@@ -171,7 +172,7 @@ export default {
     }
     function register() {
       if (Username.value == "" || Email.value == "" || Password.value == "") {
-        // swal.fire({ title: "Empty Fields" });
+        swal.fire({ title: "Empty Fields" });
       } else {
         let a = Password.value;
         let b = window.btoa(a);
@@ -190,6 +191,7 @@ export default {
             return response.json();
           })
           .then((data) => {
+            swal.fire({ title: "User Added" });
             context.emit("show");
             console.log(data);
           });
@@ -212,11 +214,14 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 li {
   list-style: none;
 }
 span {
   color: red;
+}
+label{
+  font-size: 1.5vw;
 }
 </style>
