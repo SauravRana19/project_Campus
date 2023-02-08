@@ -8,7 +8,13 @@
     >
       <i class="fa fa-address-book" aria-hidden="true"></i>Add New User
     </button>
-    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="userforms" @close="getdata()">
+    <div
+      class="modal fade"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      id="userforms"
+      @close="getdata()"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -101,8 +107,10 @@
   </div>
 </template>
 <script>
-import swal  from "sweetalert2";
+import swal from "sweetalert2";
 import { ref } from "vue";
+import { useStore } from "vuex";
+
 export default {
   name: "userfo-rm",
   setup(props, context) {
@@ -111,6 +119,8 @@ export default {
     const Email = ref("");
     const Password = ref("");
     console.log(context);
+
+    const store = useStore();
 
     const regUsername = ref(
       /^(?=.{5,20}$)(?![_.-])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$/
@@ -174,27 +184,10 @@ export default {
       if (Username.value == "" || Email.value == "" || Password.value == "") {
         swal.fire({ title: "Empty Fields" });
       } else {
-        let a = Password.value;
-        let b = window.btoa(a);
-        fetch(" https://api-generator.retool.com/2DhLht/data", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            fullname: Username.value,
-            email: Email.value,
-            password: b,
-          }),
-        })
-          .then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            swal.fire({ title: "User Added" });
-            context.emit("show");
-            console.log(data);
-          });
+        store.state.fullname = Username.value;
+        store.state.email = Email.value ;
+        store.state.password = Password.value ;
+        store.dispatch("addAdata");
       }
     }
 
@@ -221,7 +214,7 @@ li {
 span {
   color: red;
 }
-label{
+label {
   font-size: 1.5vw;
 }
 </style>

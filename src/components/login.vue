@@ -30,7 +30,7 @@
                 </li>
               </ul>
             </div>
-            <div class="form-group">
+            <div class="form-group eye">
               <label class="label mt-2">Password</label>
               <input
                 :type="passwordField"
@@ -161,13 +161,19 @@ export default {
 };
 </script>
 <style scoped>
-.form{
+.form {
   position: relative;
 }
 .label {
   font-size: 2.4vw;
 }
+.eye{
+  position: relative;
+}
 span {
+  margin-top: -20px;  
+  font-size: 1.4vw;
+  position: absolute;
   color: green;
 }
 .h1 {
@@ -183,13 +189,16 @@ span {
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 .red {
+  font-size: 1.5vw;
+  margin-top: -20px;
+  position: absolute;
   color: red;
 }
 .fnt {
   position: absolute;
   right: 3%;
   font-size: 1.2vw;
-  bottom: 50%;
+  bottom: 15%;
 }
 .red {
   color: red;

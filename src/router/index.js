@@ -4,6 +4,7 @@ import login from "@/components/login.vue";
 import dashboard from "@/components/dashboard.vue";
 import headers from  "@/components/header.vue";
 import userform from '@/components/userform.vue'
+import userdata from '@/components/userdata.vue'
 
 
 
@@ -44,6 +45,14 @@ const routes = [
     path: "/userform",
     name: "userform",
     component: userform,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/userdata/:id",
+    name: "userdata",
+    component: userdata,
     meta: {
       auth: true,
     },

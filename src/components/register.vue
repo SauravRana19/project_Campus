@@ -211,7 +211,7 @@ export default {
       } else if (!regPassword.value.test(Password.value)) {
         error.value.push({
           PasswordNValid:
-            "Password Should containe one Numeric, one Special Character, Minimum 6 Chracter  ",
+            "Only one Numeric, one Special Ch, Min 6 Ch  ",
         });
       } else {
         error.value.push({
@@ -271,12 +271,18 @@ export default {
   font-size: 2.3vw;
 }
 span {
+  font-size: 1.5vw;
+  margin-top: -20px;  
   color: green;
   font-family: "Exo 2", sans-serif;
+  position: absolute;
 }
 .red {
+  font-size: 1.5vw;
+  margin-top: -20px;
   color: red;
   font-family: "Exo 2", sans-serif;
+  position: absolute;
 }
 .h1 {
   font-size: 3vw;
@@ -300,7 +306,7 @@ span {
   right: 3%;
   font-size: 1vw;
   align-items: center;
-  bottom: 48.5%;
+  bottom: 45.5%;
 }
 .fnt1 {
   display: flex;
@@ -308,6 +314,6 @@ span {
   align-items: center;
   right: 3%;
   font-size: 1vw;
-  bottom: 25.5%;
+  bottom: 20.5%;
 }
 </style>

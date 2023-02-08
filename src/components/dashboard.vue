@@ -10,7 +10,7 @@
           <th>Password</th>
           <tr v-for="item in post" v-bind:key="item.id">
             <td>{{ item.id }}</td>
-            <td @click="userid(item.id)">
+            <td @click="userdata(item.id)">
               <a href="#">{{ item.fullname }} </a>
             </td>
             <td>{{ item.email }}</td>
@@ -89,7 +89,7 @@
               <button
                 type="button"
                 class="btn btn-warning"
-                @click="Update(EditData.id)"
+                @click="updateData(EditData.id)"
                 data-bs-dismiss="modal"
               >
                 <i class="fa fa-pencil" aria-hidden="true"></i>Update
@@ -114,9 +114,10 @@
 import userform from "@/components/userform.vue";
 import axios from "axios";
 import { useStore } from "vuex";
-import swal from "sweetalert2";
+import { useRouter } from "vue-router";
 import { onMounted, computed, ref } from "vue";
 import headers from "@/components/header.vue";
+
 
 export default {
   components: { headers, userform },
@@ -126,6 +127,7 @@ export default {
 
     let EditData = ref({});
     let b = ref("");
+    let router = useRouter();
 
     const store = useStore();
 
@@ -133,20 +135,10 @@ export default {
       return store.state.data;
     });
     function getdata() {
-      store.commit("apiData");
+      store.dispatch("apiData");
     }
     function Dell(id) {
-      fetch("https://api-generator.retool.com/2DhLht/data/" + id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((response) => {
-        if (response.ok) {
-          swal.fire({ html: "Deleted! success" });
-          getdata();
-        }
-      });
+      store.dispatch("deleteData", id)
     }
     function userid(id) {
       axios
@@ -156,42 +148,25 @@ export default {
           console.log(" Data value", EditData.value);
         });
     }
-    function Update(recordId) {
-      if (
-        EditData.value.FullName == "" ||
-        EditData.value.email == "" ||
-        EditData.value.password == ""
-      ) {
-        swal.fire({ title: "Empty Fields" });
-      } else {
-        var a = EditData.value.password;
-        b.value = window.btoa(a);
-        fetch("https://api-generator.retool.com/2DhLht/data/" + recordId, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            fullname: EditData.value.fullname,
-            email: EditData.value.email,
-            password: b.value,
-          }),
-        })
-          .then((res) => {
-            if (res.ok) {
-              console.log("PUT Request Successful");
-              this.getdata();
-              swal.fire({ html: "Updated!" });
-            } else {
-              console.log("PUT Request Failed");
-            }
-            return res;
-          })
-          .then((res) => res.json())
-          .then((data) => console.log(data))
-          .catch((err) => console.log(err));
-      }
+    function userdata(recordId){
+      console.log("recoded id of user data page",recordId)
+      router.push({
+        name: "userdata",
+        params: {
+          id: recordId,
+          
+        },
+        
+      });
+      
     }
+    function updateData(recordId){
+      store.state.fullname = EditData.value.fullname
+      store.state.email = EditData.value.email
+      store.state.password = EditData.value.password
+      store.dispatch("updateData",recordId);
+    }
+
     onMounted(function () {
       getdata();
     });
@@ -202,7 +177,8 @@ export default {
       userid,
       Data,
       EditData,
-      Update,
+      updateData,
+      userdata,
       b,
     };
   },
