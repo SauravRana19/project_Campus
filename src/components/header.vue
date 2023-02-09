@@ -42,7 +42,6 @@ export default {
   name: "hea-ders",
   setup() {
     let router = useRouter();
-
     function logout() {
       localStorage.removeItem("Registeruser");
     //   swal.fire({ html: "User Logout" });

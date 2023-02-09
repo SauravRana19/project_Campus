@@ -21,8 +21,6 @@
                 @keyup="validationE"
               />
               <!-- Error Message -->
-
-              <p v-if="error.length"></p>
               <ul>
                 <li v-for="e in error" v-bind:key="e.id">
                   <span class="red">{{ e.emailReqError }}</span>
@@ -45,7 +43,6 @@
                 class="fnt"
                 :icon="['fas', 'eye']"
               />
-              <p v-if="error.length"></p>
               <ul>
                 <li v-for="e in error" v-bind:key="e.id">
                   <span class="red"> {{ e.PasswordNValid }}</span>
@@ -53,7 +50,6 @@
                 </li>
               </ul>
             </div>
-
             <div class="row mt-2 text-center">
               <button
                 @click="login()"
@@ -76,7 +72,6 @@
 <script>
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-
 export default {
   name: "log-in",
   setup() {
@@ -90,9 +85,7 @@ export default {
     const regPassword = ref(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/
     );
-
     let router = useRouter();
-
     function validationE() {
       error.value = [];
       if (Email.value === "") {

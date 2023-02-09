@@ -36,8 +36,7 @@
                 v-model="Username"
                 @keyup="validationU"
               />
-              <!-- Error Message -->
-              <p v-if="error.length"></p>
+              <!-- Error Message -->         
               <ul>
                 <li v-for="e in error" v-bind:key="e.id">
                   <span>{{ e.regUsername }}</span>
@@ -56,7 +55,6 @@
                 @keyup="validationE"
               />
               <!-- Error Message -->
-              <p v-if="error.length"></p>
               <ul>
                 <li v-for="e in error" v-bind:key="e.id">
                   <span>{{ e.EmailReqError }}</span>
@@ -75,7 +73,6 @@
                 @keyup="validationP"
               />
               <!-- Error Message -->
-              <p v-if="error.length"></p>
               <ul>
                 <li v-for="e in error" v-bind:key="e.id">
                   <span>{{ e.PasswordNValid }}</span>
@@ -110,7 +107,6 @@
 import swal from "sweetalert2";
 import { ref } from "vue";
 import { useStore } from "vuex";
-
 export default {
   name: "userfo-rm",
   setup(props, context) {
@@ -119,9 +115,7 @@ export default {
     const Email = ref("");
     const Password = ref("");
     console.log(context);
-
     const store = useStore();
-
     const regUsername = ref(
       /^(?=.{5,20}$)(?![_.-])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$/
     );
@@ -131,7 +125,6 @@ export default {
     const regPassword = ref(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/
     );
-
     function validationU() {
       error.value = [];
       if (Username.value === "") {
@@ -190,7 +183,6 @@ export default {
         store.dispatch("addAdata");
       }
     }
-
     return {
       Username,
       Email,
@@ -212,7 +204,9 @@ li {
   list-style: none;
 }
 span {
+  font-size: 1.2vw;
   color: red;
+  font-family: "Exo 2", sans-serif;
 }
 label {
   font-size: 1.5vw;

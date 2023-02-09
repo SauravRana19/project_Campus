@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
-    <div class="tables rounded">
+  <div class="container mt-5">
+    <div class="bg-light rounded">
       <headers />
-      <table class="table table-hover">
-        <thead class="thead-dark">
+      <table class="table table-bordered border-primary ">
+        <thead class="bg-light">
           <th>Id</th>
           <th>Name</th>
           <th>Email</th>
@@ -27,7 +27,6 @@
                 <span class="btn1">Edit</span>
               </button>
             </td>
-
             <td>
               <button
                 @click="Dell(item.id)"
@@ -117,20 +116,15 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { onMounted, computed, ref } from "vue";
 import headers from "@/components/header.vue";
-
-
 export default {
   components: { headers, userform },
   name: "dash-board",
   setup() {
     let Data = ref([]);
-
     let EditData = ref({});
     let b = ref("");
     let router = useRouter();
-
     const store = useStore();
-
     const post = computed(() => {
       return store.state.data;
     });
@@ -138,7 +132,7 @@ export default {
       store.dispatch("apiData");
     }
     function Dell(id) {
-      store.dispatch("deleteData", id)
+      store.dispatch("deleteData", id);
     }
     function userid(id) {
       axios
@@ -148,25 +142,21 @@ export default {
           console.log(" Data value", EditData.value);
         });
     }
-    function userdata(recordId){
-      console.log("recoded id of user data page",recordId)
+    function userdata(recordId) {
+      console.log("recoded id of user data page", recordId);
       router.push({
         name: "userdata",
         params: {
           id: recordId,
-          
         },
-        
       });
-      
     }
-    function updateData(recordId){
-      store.state.fullname = EditData.value.fullname
-      store.state.email = EditData.value.email
-      store.state.password = EditData.value.password
-      store.dispatch("updateData",recordId);
+    function updateData(recordId) {
+      store.state.fullname = EditData.value.fullname;
+      store.state.email = EditData.value.email;
+      store.state.password = EditData.value.password;
+      store.dispatch("updateData", recordId);
     }
-
     onMounted(function () {
       getdata();
     });
@@ -184,7 +174,7 @@ export default {
   },
 };
 </script>
-<style >
+<style>
 .btn1 {
   font-size: 1.2vw;
   color: black;
@@ -208,22 +198,13 @@ ul {
   font-size: large;
   margin-left: -30px;
 }
-
 tr {
   font-size: 1.4vw;
-}
-.tables {
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-  margin: 2% 0% 0% 1%;
-  border-radius: 0 0 10px 10px;
-  background-color: aliceblue;
 }
 span {
   font-size: 2vw;
   color: darkslategray;
 }
-
 .align-right {
   text-align: right;
 }

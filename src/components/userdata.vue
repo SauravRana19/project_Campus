@@ -91,7 +91,6 @@
       </div>
     </div>
   </div>
-
   <div class="modal fade" id="userdata">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -101,7 +100,6 @@
         <form class="form-auto">
           <div class="form-group">
             <label for=""> FullName:</label>
-
             <input
               class="form-control"
               placeholder="Enter Full Name"
@@ -158,17 +156,14 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import swal from "sweetalert2";
 import router from "@/router";
-
 export default {
   name: "user-data",
   components: { headers },
   setup() {
     const data = ref([]);
-
     const route = useRoute();
     let newid = route.params.id;
     const store = useStore();
-
     function getdata() {
       axios
         .get(`https://api-generator.retool.com/2DhLht/data/` + newid)
@@ -190,16 +185,13 @@ export default {
       store.dispatch("deleteData", id);
       swal.fire({ title: "Deleted" });
       router.push({ name: "dashboard" });
-     
     }
     function returnUser(){
         router.push({ name: "dashboard" });
     }
-
     onMounted(function () {
       getdata();
     });
-
     return {
       data,
       getdata,

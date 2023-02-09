@@ -20,7 +20,6 @@
               v-model="Username"
               @keyup.prevent="validationU"
             />
-            <p v-if="error.length"></p>
             <ul>
               <li v-for="e in error" v-bind:key="e.id">
                 <span class="red">{{ e.UsernameNValid }}</span>
@@ -28,7 +27,6 @@
                 <span>{{ e.UsernameValid }}</span>
               </li>
             </ul>
-
             <label class="label">Email</label>
             <input
               type="text"
@@ -38,8 +36,6 @@
               @keyup.prevent="validationE"
             />
             <!-- Error Message -->
-
-            <p v-if="error.length"></p>
             <ul>
               <li v-for="e in error" v-bind:key="e.id">
                 <span class="red">{{ e.emailReqError }}</span>
@@ -58,15 +54,11 @@
                   v-model="Password"
                   @keyup.prevent="validationP()"
                 />
-
                 <font-awesome-icon
                   @click="showpwd()"
                   class="fnt"
                   :icon="['fas', 'eye']"
                 />
-
-                <p v-if="error.length"></p>
-
                 <ul>
                   <li v-for="e in error" v-bind:key="e.id">
                     <span class="red">{{ e.PasswordNValid }}</span>
@@ -91,7 +83,6 @@
                 class="fnt1"
                 :icon="['fas', 'eye']"
               />
-              <p v-if="error.length"></p>
               <ul>
                 <li v-for="e in error" v-bind:key="e.id">
                   <span class="red">{{ e.ConfirmpasswordNValid }}</span>
@@ -122,7 +113,6 @@
 <script>
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-
 export default {
   name: "regi-ster",
   setup() {
@@ -134,7 +124,6 @@ export default {
     const error = ref("");
     const passwordField = ref("password");
     const CpasswordField = ref("password");
-
     const regUsername = ref(
       /^(?=.{5,20}$)(?![_.-])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$/
     );
@@ -144,9 +133,7 @@ export default {
     const regPassword = ref(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/
     );
-
     let router = useRouter();
-
     function register() {
       if (
         (Username.value == "") & (Email.value == "") & (Password.value == "") &&
@@ -160,7 +147,6 @@ export default {
         router.push({ name: "login" });
       }
     }
-
     function showpwd() {
       passwordField.value =
         passwordField.value === "password" ? "text" : "password";
@@ -169,7 +155,6 @@ export default {
       CpasswordField.value =
         CpasswordField.value === "password" ? "text" : "password";
     }
-
     function validationU() {
       error.value = [];
       if (Username.value === "") {
@@ -211,7 +196,7 @@ export default {
       } else if (!regPassword.value.test(Password.value)) {
         error.value.push({
           PasswordNValid:
-            "Only one Numeric, one Special Ch, Min 6 Ch  ",
+            "1 Numeric, 1 Special Ch, Min 6 word",
         });
       } else {
         error.value.push({
@@ -221,7 +206,6 @@ export default {
     }
     function validationCP() {
       error.value = [];
-
       if (Confirmpassword.value === "") {
         error.value.push({
           ConfirmpasswordNValid: "Confirm-Password ",
@@ -239,7 +223,6 @@ export default {
     function login() {
       router.push({ name: "login" });
     }
-
     return {
       Username,
       Email,
@@ -248,7 +231,6 @@ export default {
       register,
       passwordField,
       CpasswordField,
-
       error,
       data,
       login,
@@ -290,7 +272,6 @@ span {
 .bt1 {
   font-size: 1.5vw;
 }
-
 .backgd {
   background-color: white;
   font-family: "Exo 2", sans-serif;
