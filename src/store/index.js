@@ -6,6 +6,7 @@ export default createStore({
   state: {
     name: "Dell",
     data: {},
+    editData: {},
     fullname: "",
     email: "",
     password: "",
@@ -19,6 +20,10 @@ export default createStore({
       state.data.map((data) => {
         data.password = window.atob(data.password);
       });
+    },
+    editdata(state, response) {
+      state.editData = response;
+
     },
   },
 
@@ -72,7 +77,14 @@ export default createStore({
           email: state.email,
           password: b,
         }),
-      })
+      });
+    },
+    editdata({ commit }, id) {
+      axios
+        .get("https://api-generator.retool.com/2DhLht/data/" + id)
+        .then((response) => {
+          commit("editdata", response.data);
+        });
     },
   },
 

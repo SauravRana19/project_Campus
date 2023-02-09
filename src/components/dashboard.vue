@@ -1,133 +1,157 @@
 <template>
-  <div class="container mt-5">
-    <div class="bg-light rounded">
-      <headers />
-      <table class="table table-bordered border-primary ">
-        <thead class="bg-light">
-          <th>Id</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Password</th>
-          <tr v-for="item in post" v-bind:key="item.id">
-            <td>{{ item.id }}</td>
-            <td @click="userdata(item.id)">
-              <a href="#">{{ item.fullname }} </a>
-            </td>
-            <td>{{ item.email }}</td>
-            <td>{{ item.password }}</td>
-            <td>
-              <button
-                @click="userid(item.id)"
-                type="button"
-                class="btn btn-warning btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#useredit"
-              >
-                <i class="fa fa-pencil btn1" aria-hidden="true"></i>
-                <span class="btn1">Edit</span>
-              </button>
-            </td>
-            <td>
-              <button
-                @click="Dell(item.id)"
-                type="button"
-                class="btn btn-danger btn-sm"
-              >
-                <i class="fa fa-close btn1"></i>
-                <span class="btn2">Delete</span>
-              </button>
-            </td>
-          </tr>
-        </thead>
-      </table>
+  <div class="container mt-5 me-1">
+    <div class="row">
       <div
-        class="modal fade"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        id="useredit"
-        @close="getdata()"
+        class="col-auto bg-light mt-4 m-5 rounded"
+        style="
+          box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+            rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; 
+        "
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title">Edit UserData</h1>
-            </div>
-            <form class="form-auto">
-              <div class="form-group">
-                <label for=""> FullName:</label
-                ><input
-                  class="form-control"
-                  placeholder="Enter Full Name"
-                  type="text"
-                  @keyup="register"
-                  v-model="EditData.fullname"
-                />
+        <headers />
+        <DataTable :data="Datatable" class="table d-flex">
+          <thead>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <tr v-for="item in post" v-bind:key="item.id">
+              <td>{{ item.id }}</td>
+              <td @click="userdata(item.id)">
+                <a href="#">{{ item.fullname }} </a>
+              </td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.password }}</td>
+              <td>
+                <button
+                  @click="userid(item.id)"
+                  type="button"
+                  class="btn btn-warning btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#useredit"
+                >
+                  <i class="fa fa-pencil btn1" aria-hidden="true"></i>
+                  <span class="btn1">Edit</span>
+                </button>
+              </td>
+
+              <td>
+                <button
+                  @click="Dell(item.id)"
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                >
+                  <i class="fa fa-close btn1"></i>
+                  <span class="btn2">Delete</span>
+                </button>
+              </td>
+            </tr>
+          </thead>
+        </DataTable>
+        <div
+          class="modal fade"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          id="useredit"
+          @close="getdata()"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title">Edit UserData</h1>
               </div>
-              <div class="form-group">
-                <label for="Email"> Email:</label
-                ><input
-                  class="form-control"
-                  placeholder="Enter Email"
-                  type="email"
-                  v-model="EditData.email"
-                  @keyup="register"
-                />
+              <form class="form-auto">
+                <div class="form-group">
+                  <label for=""> FullName:</label
+                  ><input
+                    class="form-control"
+                    placeholder="Enter Full Name"
+                    type="text"
+                    @keyup="register"
+                    v-model="EditData.fullname"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="Email"> Email:</label
+                  ><input
+                    class="form-control"
+                    placeholder="Enter Email"
+                    type="email"
+                    v-model="EditData.email"
+                    @keyup="register"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="Password"> Password:</label
+                  ><input
+                    class="form-control"
+                    placeholder="Enter Password"
+                    type="password"
+                    v-model="EditData.password"
+                    @keyup="register"
+                  />
+                </div>
+              </form>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-warning"
+                  @click="updateData(EditData.id)"
+                  data-bs-dismiss="modal"
+                >
+                  <i class="fa fa-pencil" aria-hidden="true"></i>Update
+                </button>
+                <button
+                  class="btn btn-danger ml-2"
+                  type="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  Close
+                </button>
               </div>
-              <div class="form-group">
-                <label for="Password"> Password:</label
-                ><input
-                  class="form-control"
-                  placeholder="Enter Password"
-                  type="password"
-                  v-model="EditData.password"
-                  @keyup="register"
-                />
-              </div>
-            </form>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-warning"
-                @click="updateData(EditData.id)"
-                data-bs-dismiss="modal"
-              >
-                <i class="fa fa-pencil" aria-hidden="true"></i>Update
-              </button>
-              <button
-                class="btn btn-danger ml-2"
-                type="close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
-                Close
-              </button>
             </div>
           </div>
         </div>
+        <userform @show="getdata()" />
       </div>
-      <userform @show="getdata()" />
     </div>
   </div>
 </template>
 <script>
 import userform from "@/components/userform.vue";
-import axios from "axios";
+// import axios from "axios";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { onMounted, computed, ref } from "vue";
 import headers from "@/components/header.vue";
+// import DataTable from 'datatables.net-vue3';
+
 export default {
   components: { headers, userform },
   name: "dash-board",
   setup() {
     let Data = ref([]);
-    let EditData = ref({});
+
     let b = ref("");
     let router = useRouter();
+
     const store = useStore();
+
+   
+
+    let EditData = computed(() => {
+      return store.state.editData;
+    });
+
     const post = computed(() => {
       return store.state.data;
     });
+
+    let Datatable = post.value
+    console.log(Datatable)
+    // function start 
+
     function getdata() {
       store.dispatch("apiData");
     }
@@ -135,12 +159,8 @@ export default {
       store.dispatch("deleteData", id);
     }
     function userid(id) {
-      axios
-        .get("https://api-generator.retool.com/2DhLht/data/" + id)
-        .then((response) => {
-          EditData.value = response.data;
-          console.log(" Data value", EditData.value);
-        });
+      store.dispatch('editdata' , id)
+ 
     }
     function userdata(recordId) {
       console.log("recoded id of user data page", recordId);
@@ -157,6 +177,7 @@ export default {
       store.state.password = EditData.value.password;
       store.dispatch("updateData", recordId);
     }
+
     onMounted(function () {
       getdata();
     });
@@ -170,6 +191,7 @@ export default {
       updateData,
       userdata,
       b,
+      Datatable,
     };
   },
 };
@@ -198,6 +220,7 @@ ul {
   font-size: large;
   margin-left: -30px;
 }
+
 tr {
   font-size: 1.4vw;
 }
@@ -205,6 +228,7 @@ span {
   font-size: 2vw;
   color: darkslategray;
 }
+
 .align-right {
   text-align: right;
 }

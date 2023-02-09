@@ -2,7 +2,7 @@
   <div class="container mt-5 bg-light rounded">
     <headers />
     <div class="row">
-      <div class="col-4 mt-3">
+      <div class="col-4 mt-3" >
         <div class="card">
           <div class="card-body text-center">
             <img
