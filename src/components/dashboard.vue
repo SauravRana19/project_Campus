@@ -13,8 +13,7 @@
     <table
       id="datatable"
       class="table table-light table-borderless table-hover"
-    >
-    
+    > 
       <thead>
         <tr class="trfilter">
           <th>Id</th>
@@ -132,7 +131,7 @@ import "jquery/dist/jquery.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
-// import $ from "jquery";
+
 
 import userform from "@/components/userform.vue";
 
@@ -166,6 +165,7 @@ export default {
 
     function getdata() {
       store.dispatch("apiData");
+      
     }
     function Dell(id) {
       store.dispatch("deleteData", id);
@@ -209,6 +209,8 @@ export default {
 
     onMounted(function () {
       getdata();
+      
+      
     });
     return {
       getdata,
@@ -239,9 +241,9 @@ li {
   list-style: none;
 }
 tr {
-  font-size: 1.8vw;
+  font-size: 1.2vw;
 }
 .trfilter {
-  font-size: 1.4vw;
+  font-size: 1.2vw;
 }
 </style>
