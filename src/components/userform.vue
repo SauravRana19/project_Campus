@@ -13,7 +13,6 @@
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       id="userforms"
-      @close="getdata()"
     >
       <div class="modal-dialog">
         <div class="modal-content">
@@ -36,7 +35,7 @@
                 v-model="Username"
                 @keyup="validationU"
               />
-              <!-- Error Message -->         
+              <!-- Error Message -->
               <ul>
                 <li v-for="e in error" v-bind:key="e.id">
                   <span>{{ e.regUsername }}</span>
@@ -105,16 +104,16 @@
 </template>
 <script>
 import swal from "sweetalert2";
-import { ref } from "vue";
+import { ref,watch } from "vue";
 import { useStore } from "vuex";
 export default {
   name: "userfo-rm",
-  setup(props, context) {
+  setup() {
     const error = ref("");
     const Username = ref("");
     const Email = ref("");
     const Password = ref("");
-    console.log(context);
+
     const store = useStore();
     const regUsername = ref(
       /^(?=.{5,20}$)(?![_.-])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$/
@@ -178,11 +177,15 @@ export default {
         swal.fire({ title: "Empty Fields" });
       } else {
         store.state.fullname = Username.value;
-        store.state.email = Email.value ;
-        store.state.password = Password.value ;
+        store.state.email = Email.value;
+        store.state.password = Password.value;
         store.dispatch("addAdata");
       }
     }
+
+    watch(Username,(newval,olvalue)=>{
+      console.log(newval, "== ",olvalue)
+    })
     return {
       Username,
       Email,

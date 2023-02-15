@@ -5,7 +5,7 @@
         <div class="col-md-6 rounded">
           <h1 class="display-1 text-center h1">Login page</h1>
           <img
-            class="img-fluid rounded mx-auto d-none d-sm-block"
+            class="img-fluid rounded mx-auto"
             src="../assets/loginbg.jpg"
           />
         </div>
@@ -25,6 +25,7 @@
                 <li v-for="e in error" v-bind:key="e.id">
                   <span class="red">{{ e.emailReqError }}</span>
                   <span>{{ e.emailNValid }}</span>
+                  <span>{{ e.emailValid }}</span>
                 </li>
               </ul>
             </div>
@@ -94,11 +95,11 @@ export default {
         });
       } else if (!regEmail.value.test(Email.value)) {
         error.value.push({
-          emailNValid: "Email is not valid",
+          emailReqError: "Email is not valid",
         });
       } else {
         error.value.push({
-          emailValid: "Username is valid",
+          emailValid: "Email is valid",
         });
       }
     }
@@ -122,13 +123,11 @@ export default {
       let EmailR = localStorage.getItem("Registeruser");
       const tempData = JSON.parse(EmailR);
       const LocalData = tempData;
-      console.log(LocalData);
+     
       if (Email.value == LocalData[1] && Password.value == LocalData[2]) {
-        console.log(Email.value && Password.value == LocalData[1]);
+      
         router.push({ name: "dashboard" });
-      } else {
-        console.log(Email.value && Password.value == LocalData[1]);
-      }
+      } 
     }
     function Signup() {
       router.push({ name: "register" });
@@ -164,7 +163,7 @@ export default {
   position: relative;
 }
 span {
-  margin-top: -20px;  
+  margin-top: 0px;  
   font-size: 1.4vw;
   position: absolute;
   color: green;
@@ -183,7 +182,7 @@ span {
 }
 .red {
   font-size: 1.5vw;
-  margin-top: -20px;
+  margin-top: 0px;
   position: absolute;
   color: red;
 }

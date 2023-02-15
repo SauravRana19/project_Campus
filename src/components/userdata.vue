@@ -171,7 +171,7 @@ export default {
           data.value = response.data;
           let a = data.value.password;
           let b = window.atob(a);
-          console.log("B", b);
+         
           data.value.password = b;
         });
     }

@@ -142,7 +142,7 @@ export default {
         alert("Empty  Field");
       } else {
         data.value.push(Username.value, Email.value, Password.value);
-        console.log(data);
+    
         localStorage.setItem("Registeruser", JSON.stringify(data.value));
         router.push({ name: "login" });
       }
@@ -254,14 +254,14 @@ export default {
 }
 span {
   font-size: 1.5vw;
-  margin-top: -20px;  
+  margin-top: 0px;  
   color: green;
   font-family: "Exo 2", sans-serif;
   position: absolute;
 }
 .red {
   font-size: 1.5vw;
-  margin-top: -20px;
+  margin-top: 0px;
   color: red;
   font-family: "Exo 2", sans-serif;
   position: absolute;

@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import axios from "axios";
 // import swal from "sweetalert2";
+import $ from "jquery";
 
 export default createStore({
   state: {
@@ -23,7 +24,6 @@ export default createStore({
     },
     editdata(state, response) {
       state.editData = response;
-
     },
   },
 
@@ -33,6 +33,23 @@ export default createStore({
         .get(`https://api-generator.retool.com/2DhLht/data`)
         .then((response) => {
           commit("apigetdata", response.data);
+          setTimeout(() => {
+            $("#datatable").DataTable({
+              lengthMenu: [
+                [5,10, 25, 50, -1],
+                [5,10, 25, 50, "All"],
+              ],
+              pageLength: 5,
+              // processing: true,
+              // serverSide: true,
+              // colReorder: true,
+              // responsive: true,
+              retrieve: true,
+              stateSave: true,
+              // paging: false,
+              bDestroy: true
+            });
+          });
         });
     },
 
@@ -64,7 +81,7 @@ export default createStore({
         dispatch("apiData");
       });
     },
-    addAdata({ state }) {
+    addAdata({ state,  dispatch }) {
       let a = state.password;
       let b = window.btoa(a);
       fetch(" https://api-generator.retool.com/2DhLht/data", {
@@ -76,9 +93,13 @@ export default createStore({
           fullname: state.fullname,
           email: state.email,
           password: b,
-        }),
+        })
+      }).then(()=>{
+        dispatch("apiData")
       });
+      
     },
+    
     editdata({ commit }, id) {
       axios
         .get("https://api-generator.retool.com/2DhLht/data/" + id)
