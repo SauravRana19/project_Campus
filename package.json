@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
@@ -13,13 +14,16 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@popperjs/core": "^2.11.6",
+    "@vitejs/plugin-vue": "^4.2.1",
     "axios": "^1.3.0",
+    "axios-middleware": "^0.3.1",
     "bootstrap": "^5.2.3",
     "core-js": "^3.8.3",
     "datatables.net-bs5": "^1.13.2",
     "datatables.net-dt": "^1.13.2",
     "datatables.net-select": "^1.6.0",
     "datatables.net-vue3": "^2.0.0",
+    "install": "^0.13.0",
     "jquery": "^3.6.3",
     "vue": "^3.2.45",
     "vue-router": "^4.0.3",
@@ -27,14 +31,8 @@
     "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-plugin-router": "~5.0.0",
-    "@vue/cli-plugin-vuex": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3"
+    "eslint-plugin-vue": "^8.0.3",
+    "vite": "^4.3.5"
   }
 }
